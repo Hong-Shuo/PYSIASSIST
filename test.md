@@ -1,3 +1,3 @@
 
 anonymous test 
-anyc check
+anyc check a
