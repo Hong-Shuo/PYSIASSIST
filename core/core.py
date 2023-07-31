@@ -411,7 +411,7 @@ class coustomChecker(BaseChecker):
             message_detail_tuple = (message_detail['Message'], message_detail['Code'], message_detail['Description'])
             message_dict = {message_code: message_detail_tuple}
         else:
-            print("未找到对应的错误代码")
+            print("Corresponding bug code not found")
         self.msgs[message_code] = (message_detail['Message'], message_detail['Code'], message_detail['Description'])
         self.Code = str(message_detail['Code'])
 
