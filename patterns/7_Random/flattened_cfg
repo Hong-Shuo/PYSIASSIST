@@ -1,0 +1,24 @@
+digraph cluster_main {
+	graph [label=main]
+	subgraph cluster_mod {
+		label=mod
+		1 [label="block:1@1
+import torch:Line 1
+from torch import nn:Line 2
+import os:Line 3
+import numpy as np:Line 4
+import random:Line 5
+torch.manual_seed(3):Line 7
+torch.cuda.manual_seed_all(3):Line 8
+torch.backends.cudnn.deterministic = True:Line 9
+torch.backends.cudnn.benchmark = False:Line 10
+np.random.seed(3):Line 11
+random.seed(3):Line 12
+os.environ['PYTHONHASHSEED'] = str(3):Line 13
+linear = nn.Linear(5, 2):Line 15
+linear2 = nn.Linear(5, 2):Line 16
+print(linear.weight):Line 18
+print(linear2.weight):Line 19
+"]
+	}
+}

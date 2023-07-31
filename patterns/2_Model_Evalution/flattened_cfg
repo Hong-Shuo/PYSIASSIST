@@ -1,0 +1,20 @@
+digraph cluster_main {
+	graph [label=main]
+	subgraph cluster_mod {
+		label=mod
+		1 [label="block:1@1
+net = ResNet(ResidualBlock, 3, 16, 3, 10).to('cuda'):Line 1
+net.load_state_dict(torch.load('pretrained/ckpt.pth'), strict=False):Line 2
+net.eval():Line 3
+with torch.no_grad()::Line 5
+"]
+		2 [label="block:2@6
+input = input.to('cuda'):Line 6
+output = net(input):Line 7
+_, predicted = output.max(1):Line 8
+print(output):Line 9
+print('%5s' % classes[predicted[0]]):Line 10
+"]
+		1 -> 2
+	}
+}

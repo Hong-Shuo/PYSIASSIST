@@ -1,0 +1,37 @@
+digraph cluster_main {
+	graph [label=main]
+	subgraph cluster_mod {
+		label=mod
+		1 [label="block:1@1
+for indx, item in enumerate(range(100))::Line 1
+"]
+		2 [label="block:2@5
+torch.backends.cudnn.benchmark = True:Line 5
+torch.cuda.synchronize():Line 6
+c = time.perf_counter():Line 7
+true_masks = dumin.to(device=device):Line 8
+imgs = dumin.to(device=device):Line 9
+torch.cuda.synchronize():Line 10
+print(f'Transferring images: {time.perf_counter() - c:2.2f}'):Line 11
+c = time.perf_counter():Line 15
+masks_pred = net(imgs):Line 16
+print(f'Forward: {time.perf_counter() - c:2.2f}'):Line 17
+c = time.perf_counter():Line 18
+beloss = criterion(masks_pred, true_masks):Line 19
+torch.cuda.synchronize():Line 20
+print(f'Loss Calc: {time.perf_counter() - c:2.2f}'):Line 21
+c = time.perf_counter():Line 25
+optimizer.zero_grad():Line 26
+beloss.backward():Line 27
+torch.cuda.synchronize():Line 28
+print(f'Back prop: {time.perf_counter() - c:2.2f}'):Line 29
+torch.cuda.synchronize():Line 32
+c = time.perf_counter():Line 33
+optimizer.step():Line 34
+torch.cuda.synchronize():Line 35
+print(f'Step: {time.perf_counter() - c:2.2f}'):Line 36
+"]
+		2 -> 1
+		1 -> 2 [label=<ast.Call object at 0x000002242A435930>]
+	}
+}

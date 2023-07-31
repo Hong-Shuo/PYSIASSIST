@@ -1,0 +1,43 @@
+digraph cluster_main {
+	graph [label=main]
+	subgraph cluster_mod {
+		label=mod
+		1 [label="block:1@1
+import torch:Line 1
+import torch.nn as nn:Line 2
+import torch.optim as optim:Line 3
+from torch.utils.data import DataLoader:Line 4
+from torchvision import datasets, transforms:Line 5
+transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize    ((0.5,), (0.5,))]):Line 8
+trainset = datasets.MNIST(root='./data', train=True, download=True,    transform=transform):Line 9
+trainloader = DataLoader(trainset, batch_size=64, shuffle=True):Line 10
+criterion = nn.CrossEntropyLoss():Line 16
+optimizer_A = optim.Adam(model_A.parameters(), lr=0.001):Line 17
+optimizer_B = optim.Adam(model_B.parameters(), lr=0.001):Line 18
+num_epochs = 10:Line 21
+"]
+		2 [label="block:2@22
+for epoch in range(num_epochs)::Line 22
+"]
+		3 [label="block:3@23
+for i, (inputs, targets) in enumerate(trainloader)::Line 23
+"]
+		5 [label="block:5@25
+optimizer_A.zero_grad():Line 25
+optimizer_B.zero_grad():Line 26
+outputs_A = model_A(inputs):Line 29
+outputs_B = model_B(inputs):Line 30
+loss_A = criterion(outputs_A, targets):Line 33
+loss_B = criterion(outputs_B, targets):Line 34
+combined_loss = loss_A + loss_B:Line 37
+combined_loss.backward():Line 40
+optimizer_A.step():Line 41
+optimizer_B.step():Line 42
+"]
+		5 -> 3
+		3 -> 5 [label=<ast.Call object at 0x0000018BE133E6B0>]
+		3 -> 2
+		2 -> 3 [label=<ast.Call object at 0x0000018BE133E890>]
+		1 -> 2
+	}
+}

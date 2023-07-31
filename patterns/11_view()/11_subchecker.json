@@ -1,0 +1,21 @@
+ {
+    "classdef_lineno_scope": {},
+    "start_sign": [],
+    "start_sign_necessary": "False",
+    "fg_type": "cfg",
+    "keyword_need_trace": [],
+    "arg_need_trace_pos": [0],
+    "end_sign_necessary": "False",
+    "end_sign": [],
+     "use_common_api_name":[],
+    "find_sign": [".view(",".shape[",".shape["],
+    "find_all_or_any": "all",
+    "trace_type": "all_code",
+    "Find_the_basis_to_be_correct_or_incorrect": "False",
+    "MessageCode":"W9901",
+    "W9901": {
+        "Message": "Detected that you are attempting to perform dimension transformation using view. \nThis transformation will not change the position of elements. It is recommended that you use permute().\n",
+        "Code": "Please do not use view() for dimension rotation",
+        "Description": ""
+  }
+}

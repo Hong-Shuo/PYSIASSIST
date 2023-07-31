@@ -1,0 +1,25 @@
+digraph cluster_main {
+	graph [label=main]
+	subgraph cluster_mod {
+		label=mod
+		1 [label="block:1@1
+for e in range(ep)::Line 1
+"]
+		2 [label="block:2@2
+for i in range(len(trainX))::Line 2
+"]
+		4 [label="block:4@3
+input_ = torch.tensor(trainX[i]).reshape(1, 1, 1):Line 3
+targ_ = torch.tensor(trainY[i]):Line 4
+out_ = model(input_):Line 6
+loss = loss_fn(out_, targ_):Line 8
+optimizer.zero_grad():Line 9
+loss.backward():Line 10
+optimizer.step():Line 12
+"]
+		4 -> 2
+		2 -> 4 [label=<ast.Call object at 0x000001DA733DBDF0>]
+		2 -> 1
+		1 -> 2 [label=<ast.Call object at 0x000001DA733DBEE0>]
+	}
+}

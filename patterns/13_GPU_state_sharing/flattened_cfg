@@ -1,0 +1,28 @@
+digraph cluster_main {
+	graph [label=main]
+	subgraph cluster_mod {
+		label=mod
+		1 [label="block:1@1
+def inference(self, num_iter=10)::Line 1
+inference():Line 12
+"]
+	}
+	subgraph cluster_mod_inference {
+		label="mod.inference"
+		3 [label="block:3@3
+prediction = exp_and_normalize(-self.unary):Line 3
+"]
+		4 [label="block:4@4
+for i in range(num_iter)::Line 4
+"]
+		5 [label="block:5@5
+tmp1 = -self.unary:Line 5
+tmp2 = self.kernel.compute(prediction):Line 8
+tmp1 = tmp1 - tmp2:Line 10
+prediction = exp_and_normalize(tmp1):Line 11
+"]
+		5 -> 4
+		4 -> 5 [label=<ast.Call object at 0x000001D40A9EFCD0>]
+		3 -> 4
+	}
+}
