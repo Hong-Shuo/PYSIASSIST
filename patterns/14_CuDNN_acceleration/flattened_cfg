@@ -32,6 +32,6 @@ torch.cuda.synchronize():Line 35
 print(f'Step: {time.perf_counter() - c:2.2f}'):Line 36
 "]
 		2 -> 1
-		1 -> 2 [label=<ast.Call object at 0x000002242A435930>]
+		1 -> 2 [label=<ast.Call object at 0x00000238AB771930>]
 	}
 }

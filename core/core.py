@@ -312,7 +312,7 @@ def get_method(class_name, method_name, inheritance_map, class_dict):
             if  func_name == method_name:
                 return cls+'.'+func_name
 
-    raise Exception(f"在类{class_name}及其父类中未找到方法{method_name}")
+    raise Exception(f"The method {method_name} was not found in class {class_name} or its parent classes.")
 
 def find_class_definition(class_name, class_dict):
 
@@ -320,7 +320,7 @@ def find_class_definition(class_name, class_dict):
         if name == class_name:
             return class_dict[name]
 
-    raise Exception(f"类{class_name}未定义或找不到级别为{class_name}的类定义")
+    raise Exception(f"The class {class_name} is not defined or the class definition for {class_name} cannot be found.")
 
 def c3_linearization(cls, inheritance_map):
     if not inheritance_map[cls]:
@@ -402,14 +402,12 @@ class coustomChecker(BaseChecker):
     }
     def __init__(self,path, linter=None):
         super().__init__(linter)
-        # 检查backward前是否有Variable
         with open(path, "r", encoding="utf-8") as json_file:
             function_params = json.load(json_file)
         message_code = function_params.get("MessageCode")
         message_detail = function_params.get(message_code)
 
         if message_detail:
-            # 将字典的值转换为元组
             message_detail_tuple = (message_detail['Message'], message_detail['Code'], message_detail['Description'])
             message_dict = {message_code: message_detail_tuple}
         else:
@@ -418,7 +416,7 @@ class coustomChecker(BaseChecker):
         self.Code = str(message_detail['Code'])
 
         self.classdef_lineno_scope = function_params.get("classdef_lineno_scope")
-        self.start_sign = function_params.get("start_sign")#["CrossEntropyLoss("]#["eval"]#".backward"
+        self.start_sign = function_params.get("start_sign")
         self.start_sign_necessary = str_to_bool(function_params.get("start_sign_necessary"))
         self.fg_type =  function_params.get("fg_type")
         self.keyword_need_trace =  function_params.get("keyword_need_trace")
@@ -497,7 +495,7 @@ class coustomChecker(BaseChecker):
             else:
                 raise Exception("find_all_or_any should be either 'all' or 'any'")
             return False
-        #节点为 ast时
+
         if not (isinstance(current_node, ast.ClassDef) or isinstance(current_node, ast.FunctionDef)):
             if self.find_all_or_any == "any":
                 if any(find_sign in astor.to_source(current_node) for find_sign in self.find_sign):
@@ -573,7 +571,7 @@ class coustomChecker(BaseChecker):
                             def_dict[path[id].statements[index].name].entryblock,
                             level=level + 1,
                             index_orgin=0)
-                        if level == 0 and is_error:  # 某条路径中没有满足要求时，报错
+                        if level == 0 and is_error:
                             node = ast_to_astroid(path[0].statements[0]).body[0]
                             isadd = True
                             self.add_message( self.Code, line=path[0].statements[0].lineno, node=node)
@@ -891,7 +889,7 @@ class coustomChecker(BaseChecker):
                 for curr_node in node.body:
                     matching_sign_end = next(
                         (end_sign for end_sign in self.end_sign if end_sign in curr_node.as_string()), None)
-                    if matching_sign_end:  # 找到开始标记
+                    if matching_sign_end:
                         if self.fg_type == "dfg":
                             end_node = self.recursive_search(curr_node, matching_sign_end)
                             if end_node == None:

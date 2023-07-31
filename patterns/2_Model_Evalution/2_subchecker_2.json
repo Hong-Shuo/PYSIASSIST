@@ -7,7 +7,7 @@
     "arg_need_trace_pos": [0],
     "end_sign_necessary": "False",
     "end_sign": [],
-     "use_common_api_name": 0,
+     "use_common_api_name": [0],
     "find_sign": ["no_grad"],
     "find_all_or_any": "any",
     "trace_type": "forward",

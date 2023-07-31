@@ -35,7 +35,7 @@ loss_val = criterion(outputs_val, labels_val.flatten()).item():Line 29
 running_val_loss += loss_val:Line 30
 "]
 		11 -> 10
-		10 -> 11 [label=<ast.Call object at 0x00000212551AE890>]
+		10 -> 11 [label=<ast.Call object at 0x000001C5F1F3E890>]
 		9 [label="block:9@31
 validation_loss.append(running_val_loss / len(valloader)):Line 31
 print('[%d, %5d] train_loss: %.3f | val_loss: %.3f' % (epoch, i + 1,     running_loss / 2000, running_val_loss / len(valloader))):Line 33
@@ -46,10 +46,10 @@ running_loss = 0.0:Line 45
 		10 -> 9
 		8 -> 10
 		6 -> 8
-		4 -> 6 [label=<ast.Compare object at 0x00000212551AEE30>]
-		4 -> 2 [label=<ast.Compare object at 0x00000212551ACD30>]
-		2 -> 4 [label=<ast.Call object at 0x00000212551AF640>]
+		4 -> 6 [label=<ast.Compare object at 0x000001C5F1F3EE30>]
+		4 -> 2 [label=<ast.Compare object at 0x000001C5F1F3CD30>]
+		2 -> 4 [label=<ast.Call object at 0x000001C5F1F3F640>]
 		2 -> 1
-		1 -> 2 [label=<ast.Call object at 0x00000212551579A0>]
+		1 -> 2 [label=<ast.Call object at 0x000001C5F1EE79A0>]
 	}
 }
