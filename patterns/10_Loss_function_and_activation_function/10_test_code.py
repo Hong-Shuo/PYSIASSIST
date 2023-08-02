@@ -1,6 +1,0 @@
-a = torch.tensor([[1., 1., 1., 0., 0.]])
-b = torch.tensor([[0., 0.0011122, 8.9638, 0., 0.]])
-c = nn.Sigmoid()(b)
-criterion = nn.BCEWithLogitsLoss()
-criterion(a,b)
-print(criterion(a,c))
