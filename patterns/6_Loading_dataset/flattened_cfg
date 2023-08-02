@@ -4,213 +4,40 @@ digraph cluster_main {
 		label=mod
 		1 [label="block:1@1
 import torch:Line 1
-import torchvision:Line 2
-import torchvision.transforms as transforms:Line 3
-import matplotlib.pyplot as plt:Line 4
-import numpy as np:Line 5
-import torch.nn as nn:Line 6
-import torch.nn.functional as F:Line 7
-import torch.optim as optim:Line 8
-import random:Line 9
-import os:Line 10
-class conv_module(nn.Module)::Line 12
-class mlp_module(nn.Module)::Line 24
-class Net(nn.Module)::Line 35
-random.seed(int(1024)):Line 46
-os.environ['PYTHONHASHSEED'] = str(1024):Line 47
-np.random.seed(int(1024)):Line 48
-torch.manual_seed(int(1024)):Line 49
-torch.cuda.manual_seed(int(1024)):Line 50
-torch.cuda.manual_seed_all(int(1024)):Line 51
-torch.backends.cudnn.deterministic = True:Line 52
-torch.backends.cudnn.benchmark = False:Line 53
-torch.backends.cudnn.enabled = False:Line 54
-transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize    ((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]):Line 56
-batch_size = 4:Line 60
-trainset = torchvision.datasets.CIFAR10(root='./data', train=True, download    =True, transform=transform):Line 62
-trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,    shuffle=True, num_workers=2):Line 64
-testset = torchvision.datasets.CIFAR10(root='./data', train=False, download    =True, transform=transform):Line 67
-testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,    shuffle=False, num_workers=2):Line 69
-classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse',    'ship', 'truck'):Line 72
-dataiter = iter(trainloader):Line 76
-net = Net().cuda():Line 78
-criterion = nn.CrossEntropyLoss():Line 80
-optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9):Line 81
+import torch.nn as nn:Line 2
+import torch.optim as optim:Line 3
+from torch.utils.data import DataLoader:Line 4
+from torchvision import datasets, transforms:Line 5
+transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize    ((0.5,), (0.5,))]):Line 8
+trainset = datasets.MNIST(root='./data', train=True, download=True,    transform=transform):Line 9
+trainloader = DataLoader(trainset, batch_size=64, shuffle=True):Line 10
+criterion = nn.CrossEntropyLoss():Line 16
+optimizer_A = optim.Adam(model_A.parameters(), lr=0.001):Line 17
+optimizer_B = optim.Adam(model_B.parameters(), lr=0.001):Line 18
+num_epochs = 10:Line 21
 "]
-		32 [label="block:32@83
-for epoch in range(2)::Line 83
+		2 [label="block:2@22
+for epoch in range(num_epochs)::Line 22
 "]
-		33 [label="block:33@85
-running_loss = 0.0:Line 85
+		3 [label="block:3@23
+for i, (inputs, targets) in enumerate(trainloader)::Line 23
 "]
-		35 [label="block:35@86
-for i, data in enumerate(trainloader, 0)::Line 86
+		5 [label="block:5@25
+optimizer_A.zero_grad():Line 25
+optimizer_B.zero_grad():Line 26
+outputs_A = model_A(inputs):Line 29
+outputs_B = model_B(inputs):Line 30
+loss_A = criterion(outputs_A, targets):Line 33
+loss_B = criterion(outputs_B, targets):Line 34
+combined_loss = loss_A + loss_B:Line 37
+combined_loss.backward():Line 40
+optimizer_A.step():Line 41
+optimizer_B.step():Line 42
 "]
-		36 [label="block:36@88
-inputs, labels = data:Line 88
-optimizer.zero_grad():Line 91
-outputs = net(inputs.cuda()):Line 94
-loss = criterion(outputs, labels.cuda()):Line 95
-loss.backward():Line 96
-optimizer.step():Line 97
-running_loss += loss.item():Line 100
-if i % 2000 == 1999::Line 101
-"]
-		38 [label="block:38@102
-print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 2000:.3f}'):Line 102
-running_loss = 0.0:Line 103
-"]
-		38 -> 35
-		36 -> 38 [label=<ast.Compare object at 0x000001363D98BE80>]
-		36 -> 35 [label=<ast.Compare object at 0x000001363D98EA70>]
-		35 -> 36 [label=<ast.Call object at 0x000001363D98C730>]
-		35 -> 32
-		33 -> 35
-		32 -> 33 [label=<ast.Call object at 0x000001363D98C940>]
-		34 [label="block:34@105
-print('Finished Training'):Line 105
-correct = 0:Line 108
-total = 0:Line 109
-with torch.no_grad()::Line 111
-"]
-		40 [label="block:40@112
-for data in testloader::Line 112
-"]
-		42 [label="block:42@113
-images, labels = data:Line 113
-outputs = net(images.cuda()):Line 115
-_, predicted = torch.max(outputs.data, 1):Line 117
-total += labels.size(0):Line 118
-correct += (predicted == labels.cuda()).sum().item():Line 119
-"]
-		42 -> 40
-		40 -> 42 [label=<ast.Name object at 0x000001363D98B460>]
-		41 [label="block:41@121
-print(    f'Accuracy of the network on the 10000 test images: {100 * correct // total} %'    ):Line 121
-correct_pred = {classname: (0) for classname in classes}:Line 123
-total_pred = {classname: (0) for classname in classes}:Line 124
-with torch.no_grad()::Line 127
-"]
-		44 [label="block:44@128
-for data in testloader::Line 128
-"]
-		46 [label="block:46@129
-images, labels = data:Line 129
-outputs = net(images.cuda()):Line 130
-_, predictions = torch.max(outputs, 1):Line 131
-"]
-		48 [label="block:48@133
-for label, prediction in zip(labels.cuda(), predictions)::Line 133
-"]
-		49 [label="block:49@134
-if label == prediction::Line 134
-"]
-		51 [label="block:51@135
-correct_pred[classes[label]] += 1:Line 135
-"]
-		52 [label="block:52@136
-total_pred[classes[label]] += 1:Line 136
-"]
-		52 -> 48
-		51 -> 52
-		49 -> 51 [label=<ast.Compare object at 0x000001363D989F30>]
-		49 -> 52 [label=<ast.Compare object at 0x000001363D98EE00>]
-		48 -> 49 [label=<ast.Call object at 0x000001363D98A080>]
-		48 -> 44
-		46 -> 48
-		44 -> 46 [label=<ast.Name object at 0x000001363D98A560>]
-		45 [label="block:45@140
-for classname, correct_count in correct_pred.items()::Line 140
-"]
-		53 [label="block:53@141
-accuracy = 100 * float(correct_count) / total_pred[classname]:Line 141
-print(f'Accuracy for class: {classname:5s} is {accuracy:.1f} %'):Line 142
-"]
-		53 -> 45
-		45 -> 53 [label=<ast.Call object at 0x000001363D989B40>]
-		54 [label="block:54@144
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu'):Line 144
-print(device):Line 145
-"]
-		45 -> 54
-		44 -> 45
-		41 -> 44
-		40 -> 41
-		34 -> 40
-		32 -> 34
-		1 -> 32
-	}
-	subgraph cluster_mod_conv_module {
-		label="mod.conv_module"
-		3 [label="block:3@13
-def __init__(self)::Line 13
-def forward(self, x)::Line 19
-"]
-	}
-	subgraph cluster_mod_conv_module___init__ {
-		label="mod.conv_module.__init__"
-		5 [label="block:5@14
-super().__init__():Line 14
-self.conv1 = nn.Conv2d(3, 6, 5):Line 15
-self.pool = nn.MaxPool2d(2, 2):Line 16
-self.conv2 = nn.Conv2d(6, 16, 5):Line 17
-"]
-	}
-	subgraph cluster_mod_conv_module_forward {
-		label="mod.conv_module.forward"
-		8 [label="block:8@20
-x = self.pool(F.relu(self.conv1(x))):Line 20
-x = self.pool(F.relu(self.conv2(x))):Line 21
-x = torch.flatten(x, 1):Line 22
-return x:Line 23
-"]
-	}
-	subgraph cluster_mod_mlp_module {
-		label="mod.mlp_module"
-		13 [label="block:13@25
-def __init__(self)::Line 25
-def forward(self, x)::Line 30
-"]
-	}
-	subgraph cluster_mod_mlp_module___init__ {
-		label="mod.mlp_module.__init__"
-		15 [label="block:15@26
-super().__init__():Line 26
-self.fc1 = nn.Linear(16 * 5 * 5, 120):Line 27
-self.fc2 = nn.Linear(120, 84):Line 28
-self.fc3 = nn.Linear(84, 10):Line 29
-"]
-	}
-	subgraph cluster_mod_mlp_module_forward {
-		label="mod.mlp_module.forward"
-		18 [label="block:18@31
-x = F.relu(self.fc1(x)):Line 31
-x = F.relu(self.fc2(x)):Line 32
-x = self.fc3(x):Line 33
-return x:Line 34
-"]
-	}
-	subgraph cluster_mod_Net {
-		label="mod.Net"
-		23 [label="block:23@36
-def __init__(self)::Line 36
-def forward(self, x)::Line 41
-"]
-	}
-	subgraph cluster_mod_Net___init__ {
-		label="mod.Net.__init__"
-		25 [label="block:25@37
-super().__init__():Line 37
-self.conv = conv_module():Line 38
-self.mlp = mlp_module():Line 39
-"]
-	}
-	subgraph cluster_mod_Net_forward {
-		label="mod.Net.forward"
-		28 [label="block:28@42
-x = self.conv(x):Line 42
-x = self.mlp(x):Line 43
-return x:Line 44
-"]
+		5 -> 3
+		3 -> 5 [label=<ast.Call object at 0x00000242D751E6E0>]
+		3 -> 2
+		2 -> 3 [label=<ast.Call object at 0x00000242D751E8C0>]
+		1 -> 2
 	}
 }

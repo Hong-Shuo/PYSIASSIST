@@ -12,7 +12,7 @@ if torch.cuda.is_available()::Line 39
 		16 [label="block:16@40
 model.cuda():Line 40
 "]
-		1 -> 16 [label=<ast.Call object at 0x000001DAA4493250>]
+		1 -> 16 [label=<ast.Call object at 0x000001B0CFEB3250>]
 	}
 	subgraph cluster_mod_TextClassificationRNN {
 		label="mod.TextClassificationRNN"

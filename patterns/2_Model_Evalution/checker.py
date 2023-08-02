@@ -1,6 +1,6 @@
 import src.src as src
 
-test_scripts = [r"2_test_code.py"]
+test_scripts = [r"2_Code_to_be_Checked.py"]
 
 isadd, isfind = src.main(r"2_subchecker_1.json",test_scripts)
 

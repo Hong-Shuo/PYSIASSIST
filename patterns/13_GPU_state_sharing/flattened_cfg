@@ -51,7 +51,7 @@ pred = h.data.max(1)[1]:Line 63
 correct += pred.eq(y).sum():Line 64
 "]
 		5 -> 4
-		4 -> 5 [label=<ast.Name object at 0x000001C548BB2110>]
+		4 -> 5 [label=<ast.Name object at 0x000001AA06182110>]
 		6 [label="block:6@65
 return correct / len(test_set_CIFAR10):Line 65
 "]
@@ -104,7 +104,7 @@ s1 = time.clock():Line 258
 avcostt = avcostt + s1 - s6:Line 259
 "]
 		65 -> 64
-		64 -> 65 [label=<ast.Call object at 0x000001C548BA1750>]
+		64 -> 65 [label=<ast.Call object at 0x000001AA06171750>]
 		66 [label="block:66@261
 t2 = time.clock():Line 261
 print(    'total time %.2f loading time %.2f, cuda transfer time %.2f, forward time: %.2f, cost time %.2f, step time %.2f, average cost time %.2f'     % (t2 - t1, loadt, cudat, forwardt, costt, stept, avcostt)):Line 263
@@ -113,7 +113,7 @@ average_cost = 0:Line 266
 		66 -> 61
 		64 -> 66
 		62 -> 64
-		61 -> 62 [label=<ast.Call object at 0x000001C548BA2050>]
+		61 -> 62 [label=<ast.Call object at 0x000001AA06172050>]
 		60 -> 61
 	}
 	subgraph cluster_mod_BasicResBlock1 {
@@ -206,7 +206,7 @@ for x in range(0, number_of_blocks[0])::Line 146
 self.resLayer1.append(BasicResBlock2(2 * width, 2 * width)):Line 147
 "]
 		34 -> 33
-		33 -> 34 [label=<ast.Call object at 0x000001C548BAABC0>]
+		33 -> 34 [label=<ast.Call object at 0x000001AA0617ABC0>]
 		35 [label="block:35@148
 self.resLayer1 = nn.Sequential(*self.resLayer1):Line 148
 self.resLayer2 = []:Line 150
@@ -219,7 +219,7 @@ for x in range(0, number_of_blocks[1])::Line 152
 self.resLayer2.append(BasicResBlock2(4 * width, 4 * width)):Line 153
 "]
 		37 -> 36
-		36 -> 37 [label=<ast.Call object at 0x000001C548BAA200>]
+		36 -> 37 [label=<ast.Call object at 0x000001AA0617A200>]
 		38 [label="block:38@154
 self.resLayer2 = nn.Sequential(*self.resLayer2):Line 154
 self.resLayer3 = []:Line 156
@@ -232,7 +232,7 @@ for x in range(0, number_of_blocks[2])::Line 158
 self.resLayer3.append(BasicResBlock2(8 * width, 8 * width)):Line 159
 "]
 		40 -> 39
-		39 -> 40 [label=<ast.Call object at 0x000001C548BA9840>]
+		39 -> 40 [label=<ast.Call object at 0x000001AA06179840>]
 		41 [label="block:41@160
 self.resLayer3 = nn.Sequential(*self.resLayer3):Line 160
 self.avgpool1 = torch.nn.AvgPool2d(8, stride=1):Line 162
@@ -248,7 +248,7 @@ if isinstance(m, nn.Conv2d)::Line 169
 torch.nn.init.kaiming_normal(m.weight, mode='fan_out'):Line 170
 "]
 		45 -> 42
-		43 -> 45 [label=<ast.Call object at 0x000001C548BA8DF0>]
+		43 -> 45 [label=<ast.Call object at 0x000001AA06178DF0>]
 		47 [label="block:47@172
 if isinstance(m, nn.BatchNorm2d)::Line 172
 "]
@@ -257,7 +257,7 @@ torch.nn.init.constant(m.weight, 1):Line 173
 torch.nn.init.constant(m.bias, 0):Line 174
 "]
 		48 -> 42
-		47 -> 48 [label=<ast.Call object at 0x000001C548BA8A90>]
+		47 -> 48 [label=<ast.Call object at 0x000001AA06178A90>]
 		50 [label="block:50@176
 if isinstance(m, nn.Linear)::Line 176
 "]
@@ -266,11 +266,11 @@ torch.nn.init.kaiming_normal(m.weight, mode='fan_out'):Line 177
 torch.nn.init.constant(m.bias, 0):Line 178
 "]
 		51 -> 42
-		50 -> 51 [label=<ast.Call object at 0x000001C548BA8580>]
-		50 -> 42 [label=<ast.UnaryOp object at 0x000001C548BAF130>]
-		47 -> 50 [label=<ast.UnaryOp object at 0x000001C548BAFE80>]
-		43 -> 47 [label=<ast.UnaryOp object at 0x000001C548BAF8B0>]
-		42 -> 43 [label=<ast.Call object at 0x000001C548BA8EB0>]
+		50 -> 51 [label=<ast.Call object at 0x000001AA06178580>]
+		50 -> 42 [label=<ast.UnaryOp object at 0x000001AA0617F130>]
+		47 -> 50 [label=<ast.UnaryOp object at 0x000001AA0617FE80>]
+		43 -> 47 [label=<ast.UnaryOp object at 0x000001AA0617F8B0>]
+		42 -> 43 [label=<ast.Call object at 0x000001AA06178EB0>]
 		41 -> 42
 		39 -> 41
 		38 -> 39

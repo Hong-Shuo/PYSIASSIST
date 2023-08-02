@@ -1,6 +1,6 @@
 import src.src as src
 
-test_scripts = [r"7_test_code.py"]
+test_scripts = [r"7_Code_to_be_Checked.py"]
 
 
 
