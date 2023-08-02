@@ -1,5 +1,0 @@
-optimizer.zero_grad()
-out = model(batch_X)
-loss = loss_fn(out, batch_y)
-loss.backward()
-optimizer.step()
