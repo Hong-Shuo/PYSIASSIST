@@ -1,0 +1,17 @@
+digraph cluster_main {
+	graph [label=main]
+	subgraph cluster_mod {
+		label=mod
+		1 [label="block:1@1
+torch.manual_seed(2809):Line 1
+modelA = LeNetA():Line 2
+torch.manual_seed(2809):Line 3
+modelB = LeNetB():Line 4
+x = torch.randn(2, 1, 32, 32):Line 6
+torch.manual_seed(2809):Line 7
+outputA = modelA(x):Line 8
+torch.manual_seed(2809):Line 9
+outputB = modelB(x):Line 10
+"]
+	}
+}

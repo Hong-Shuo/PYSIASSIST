@@ -1,0 +1,21 @@
+ {
+    "classdef_lineno_scope": {},
+    "start_sign": [],
+    "start_sign_necessary": "False",
+    "fg_type": "cfg",
+    "keyword_need_trace": [],
+    "arg_need_trace_pos": [0],
+    "end_sign_necessary": "False",
+    "end_sign": [],
+     "use_common_api_name": [0],
+    "find_sign": ["nn.init","load_state_dict"],
+    "find_all_or_any": "any",
+    "trace_type": "all_code",
+    "Find_the_basis_to_be_correct_or_incorrect": "True",
+    "MessageCode":"I9901",
+    "I9901": {
+        "Message": "There was no initialization of the model in the class definition.\n We recommend you to use manual initialization methods to avoid potential silent bugs that may occur due to unfamiliarity with automatic initialization.\n",
+        "Code": "The_model_was_not_initialized_during_definition.",
+        "Description": "It is recommended to initialize the model during its definition."
+  }
+}

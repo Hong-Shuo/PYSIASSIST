@@ -1,0 +1,22 @@
+ {
+    "classdef_lineno_scope": {},
+    "start_sign": ["no_grad"],
+    "start_sign_necessary": "True",
+    "fg_type": "cfg",
+    "keyword_need_trace": [],
+    "arg_need_trace_pos": [0],
+    "end_sign_necessary": "False",
+    "end_sign": [],
+     "use_common_api_name": [0],
+    "find_sign": ["eval"],
+    "find_all_or_any": "any",
+    "trace_type": "reverse",
+    "Find_the_basis_to_be_correct_or_incorrect": "True",
+
+    "MessageCode":"C9901",
+    "C9901": {
+        "Message": "Detection of the absence of eval() before using with no_grad(). Please confirm that you are not using it to evaluate the model.",
+        "Code": "no_grad_without_eval().",
+        "Description": ""
+  }
+}

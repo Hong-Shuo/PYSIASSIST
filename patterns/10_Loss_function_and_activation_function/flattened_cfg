@@ -1,0 +1,14 @@
+digraph cluster_main {
+	graph [label=main]
+	subgraph cluster_mod {
+		label=mod
+		1 [label="block:1@1
+a = torch.tensor([[1.0, 1.0, 1.0, 0.0, 0.0]]):Line 1
+b = torch.tensor([[0.0, 0.0011122, 8.9638, 0.0, 0.0]]):Line 2
+c = nn.Sigmoid()(b):Line 3
+criterion = nn.BCEWithLogitsLoss():Line 4
+criterion(a, b):Line 5
+print(criterion(a, c)):Line 6
+"]
+	}
+}

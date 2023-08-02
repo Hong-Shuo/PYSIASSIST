@@ -1,0 +1,297 @@
+digraph cluster_main {
+	graph [label=main]
+	subgraph cluster_mod {
+		label=mod
+		1 [label="block:1@1
+import torch:Line 1
+import time:Line 2
+from torch.autograd import Variable:Line 3
+import torchvision:Line 4
+from torchvision import transforms, datasets:Line 5
+import torch.nn.functional as F:Line 6
+import matplotlib.pyplot as plt:Line 7
+import numpy as np:Line 8
+import torch.nn as nn:Line 9
+import torch.optim as optim:Line 10
+mean_CIFAR10 = np.array([0.49139968, 0.48215841, 0.44653091]):Line 16
+std_CIFAR10 = np.array([0.49139968, 0.48215841, 0.44653091]):Line 17
+transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize    (mean_CIFAR10, std_CIFAR10)]):Line 20
+training_set_CIFAR10 = datasets.CIFAR10(root='cifar10/', transform=    transform, train=True, download=True):Line 25
+test_set_CIFAR10 = datasets.CIFAR10(root='cifar10/', transform=transform,    train=False, download=True):Line 30
+print('Number of training examples:', len(training_set_CIFAR10)):Line 35
+print('Number of test examples:', len(test_set_CIFAR10)):Line 36
+classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse',    'ship', 'truck'):Line 39
+training_loader_CIFAR10 = torch.utils.data.DataLoader(dataset=    training_set_CIFAR10, batch_size=512, shuffle=True):Line 44
+test_loader_CIFAR10 = torch.utils.data.DataLoader(dataset=test_set_CIFAR10,    batch_size=512, shuffle=False):Line 48
+def test()::Line 55
+class BasicResBlock1(nn.Module)::Line 73
+class BasicResBlock2(nn.Module)::Line 97
+class ResNet(nn.Module)::Line 128
+def train(cycles, cost_criterion, cnn, optimizer)::Line 210
+cycles = 50:Line 269
+cost_criterion = torch.nn.CrossEntropyLoss():Line 270
+cnn = ResNet(16, [1, 1, 1]).cuda():Line 271
+optimizer = optim.Adam(cnn.parameters(), lr=0.0001):Line 272
+"]
+	}
+	subgraph cluster_mod_test {
+		label="mod.test"
+		3 [label="block:3@56
+print('Started evaluating test accuracy...'):Line 56
+cnn.eval():Line 57
+correct = 0:Line 59
+"]
+		4 [label="block:4@60
+for x, y in test_loader_CIFAR10::Line 60
+"]
+		5 [label="block:5@61
+x, y = Variable(x).cuda(), y.cuda():Line 61
+h = cnn.forward(x):Line 62
+pred = h.data.max(1)[1]:Line 63
+correct += pred.eq(y).sum():Line 64
+"]
+		5 -> 4
+		4 -> 5 [label=<ast.Name object at 0x000001C548BB2110>]
+		6 [label="block:6@65
+return correct / len(test_set_CIFAR10):Line 65
+"]
+		4 -> 6
+		3 -> 4
+	}
+	subgraph cluster_mod_train {
+		label="mod.train"
+		60 [label="block:60@211
+average_cost = 0:Line 211
+acc = 0:Line 212
+"]
+		61 [label="block:61@214
+for e in range(cycles)::Line 214
+"]
+		62 [label="block:62@216
+print('Cycle: ', e):Line 216
+cnn.train():Line 217
+loadt = 0:Line 218
+cudat = 0:Line 219
+forwardt = 0:Line 220
+costt = 0:Line 221
+stept = 0:Line 222
+avcostt = 0:Line 223
+s1 = time.clock():Line 228
+t1 = time.clock():Line 229
+"]
+		64 [label="block:64@230
+for i, (x, y) in enumerate(training_loader_CIFAR10, 0)::Line 230
+"]
+		65 [label="block:65@231
+s2 = time.clock():Line 231
+loadt = loadt + s2 - s1:Line 232
+x, y = Variable(x).cuda(), Variable(y).cuda():Line 234
+s3 = time.clock():Line 236
+cudat = cudat + s3 - s2:Line 237
+h = cnn.forward(x):Line 239
+s4 = time.clock():Line 241
+forwardt = forwardt + s4 - s3:Line 242
+cost = cost_criterion(h, y):Line 244
+s5 = time.clock():Line 246
+costt = costt + s5 - s4:Line 247
+optimizer.zero_grad():Line 249
+cost.backward():Line 250
+optimizer.step():Line 251
+s6 = time.clock():Line 253
+stept = stept + s6 - s5:Line 254
+average_cost += cost.data[0]:Line 256
+s1 = time.clock():Line 258
+avcostt = avcostt + s1 - s6:Line 259
+"]
+		65 -> 64
+		64 -> 65 [label=<ast.Call object at 0x000001C548BA1750>]
+		66 [label="block:66@261
+t2 = time.clock():Line 261
+print(    'total time %.2f loading time %.2f, cuda transfer time %.2f, forward time: %.2f, cost time %.2f, step time %.2f, average cost time %.2f'     % (t2 - t1, loadt, cudat, forwardt, costt, stept, avcostt)):Line 263
+average_cost = 0:Line 266
+"]
+		66 -> 61
+		64 -> 66
+		62 -> 64
+		61 -> 62 [label=<ast.Call object at 0x000001C548BA2050>]
+		60 -> 61
+	}
+	subgraph cluster_mod_BasicResBlock1 {
+		label="mod.BasicResBlock1"
+		10 [label="block:10@74
+def __init__(self, input, output, downsample, stride=1)::Line 74
+def forward(self, x1)::Line 84
+"]
+	}
+	subgraph cluster_mod_BasicResBlock1___init__ {
+		label="mod.BasicResBlock1.__init__"
+		12 [label="block:12@75
+super(BasicResBlock1, self).__init__():Line 75
+self.conv1 = torch.nn.Conv2d(input, output, kernel_size=3, stride=stride,    padding=1, bias=False):Line 77
+self.batchNorm1 = torch.nn.BatchNorm2d(output):Line 78
+self.conv2 = torch.nn.Conv2d(output, output, kernel_size=3, padding=1,    stride=1, bias=False):Line 79
+self.downsample = downsample:Line 80
+"]
+	}
+	subgraph cluster_mod_BasicResBlock1_forward {
+		label="mod.BasicResBlock1.forward"
+		15 [label="block:15@85
+residual = self.downsample(x1):Line 85
+x2 = self.conv1(x1):Line 87
+x2 = self.batchNorm1(x2):Line 88
+x2 = F.relu(x2, inplace=True):Line 89
+x2 = self.conv2(x2):Line 90
+x2 += residual:Line 92
+return x2:Line 94
+"]
+	}
+	subgraph cluster_mod_BasicResBlock2 {
+		label="mod.BasicResBlock2"
+		20 [label="block:20@98
+def __init__(self, input, output)::Line 98
+def forward(self, x1)::Line 107
+"]
+	}
+	subgraph cluster_mod_BasicResBlock2___init__ {
+		label="mod.BasicResBlock2.__init__"
+		22 [label="block:22@99
+super(BasicResBlock2, self).__init__():Line 99
+self.conv1 = torch.nn.Conv2d(input, output, kernel_size=3, stride=1,    padding=1, bias=False):Line 101
+self.batchNorm1 = torch.nn.BatchNorm2d(input):Line 102
+self.conv2 = torch.nn.Conv2d(output, output, kernel_size=3, padding=1,    stride=1, bias=False):Line 103
+self.batchNorm2 = torch.nn.BatchNorm2d(output):Line 104
+self.batchNorm3 = torch.nn.BatchNorm2d(output):Line 105
+"]
+	}
+	subgraph cluster_mod_BasicResBlock2_forward {
+		label="mod.BasicResBlock2.forward"
+		25 [label="block:25@108
+residual = x1:Line 108
+x2 = self.batchNorm1(x1):Line 110
+x2 = F.relu(x2, inplace=True):Line 111
+x2 = self.conv1(x1):Line 112
+x2 = self.batchNorm2(x2):Line 114
+x2 = F.relu(x2, inplace=True):Line 115
+x2 = self.conv2(x2):Line 116
+x2 += residual:Line 118
+x2 = self.batchNorm3(x2):Line 120
+x2 = F.relu(x2, inplace=True):Line 121
+return x2:Line 123
+"]
+	}
+	subgraph cluster_mod_ResNet {
+		label="mod.ResNet"
+		30 [label="block:30@129
+def __init__(self, width, number_of_blocks)::Line 129
+def forward(self, x)::Line 181
+"]
+	}
+	subgraph cluster_mod_ResNet___init__ {
+		label="mod.ResNet.__init__"
+		32 [label="block:32@130
+super(ResNet, self).__init__():Line 130
+self.conv1 = torch.nn.Conv2d(3, width, kernel_size=3, stride=1, padding=1,    bias=False):Line 134
+self.batchNorm1 = torch.nn.BatchNorm2d(width):Line 135
+self.relu1 = nn.ReLU(inplace=True):Line 136
+self.downsample1 = torch.nn.Conv2d(width, 2 * width, kernel_size=1, stride=    1, bias=False):Line 140
+self.downsample2 = torch.nn.Conv2d(2 * width, 4 * width, kernel_size=1,    stride=2, bias=False):Line 141
+self.downsample3 = torch.nn.Conv2d(4 * width, 8 * width, kernel_size=1,    stride=2, bias=False):Line 142
+self.resLayer1 = []:Line 144
+self.resLayer1.append(BasicResBlock1(width, 2 * width, self.downsample1, 1)):Line 145
+"]
+		33 [label="block:33@146
+for x in range(0, number_of_blocks[0])::Line 146
+"]
+		34 [label="block:34@147
+self.resLayer1.append(BasicResBlock2(2 * width, 2 * width)):Line 147
+"]
+		34 -> 33
+		33 -> 34 [label=<ast.Call object at 0x000001C548BAABC0>]
+		35 [label="block:35@148
+self.resLayer1 = nn.Sequential(*self.resLayer1):Line 148
+self.resLayer2 = []:Line 150
+self.resLayer2.append(BasicResBlock1(2 * width, 4 * width, self.downsample2, 2)    ):Line 151
+"]
+		36 [label="block:36@152
+for x in range(0, number_of_blocks[1])::Line 152
+"]
+		37 [label="block:37@153
+self.resLayer2.append(BasicResBlock2(4 * width, 4 * width)):Line 153
+"]
+		37 -> 36
+		36 -> 37 [label=<ast.Call object at 0x000001C548BAA200>]
+		38 [label="block:38@154
+self.resLayer2 = nn.Sequential(*self.resLayer2):Line 154
+self.resLayer3 = []:Line 156
+self.resLayer3.append(BasicResBlock1(4 * width, 8 * width, self.downsample3, 2)    ):Line 157
+"]
+		39 [label="block:39@158
+for x in range(0, number_of_blocks[2])::Line 158
+"]
+		40 [label="block:40@159
+self.resLayer3.append(BasicResBlock2(8 * width, 8 * width)):Line 159
+"]
+		40 -> 39
+		39 -> 40 [label=<ast.Call object at 0x000001C548BA9840>]
+		41 [label="block:41@160
+self.resLayer3 = nn.Sequential(*self.resLayer3):Line 160
+self.avgpool1 = torch.nn.AvgPool2d(8, stride=1):Line 162
+self.full1 = nn.Linear(8 * width, 10):Line 165
+"]
+		42 [label="block:42@168
+for m in self.modules()::Line 168
+"]
+		43 [label="block:43@169
+if isinstance(m, nn.Conv2d)::Line 169
+"]
+		45 [label="block:45@170
+torch.nn.init.kaiming_normal(m.weight, mode='fan_out'):Line 170
+"]
+		45 -> 42
+		43 -> 45 [label=<ast.Call object at 0x000001C548BA8DF0>]
+		47 [label="block:47@172
+if isinstance(m, nn.BatchNorm2d)::Line 172
+"]
+		48 [label="block:48@173
+torch.nn.init.constant(m.weight, 1):Line 173
+torch.nn.init.constant(m.bias, 0):Line 174
+"]
+		48 -> 42
+		47 -> 48 [label=<ast.Call object at 0x000001C548BA8A90>]
+		50 [label="block:50@176
+if isinstance(m, nn.Linear)::Line 176
+"]
+		51 [label="block:51@177
+torch.nn.init.kaiming_normal(m.weight, mode='fan_out'):Line 177
+torch.nn.init.constant(m.bias, 0):Line 178
+"]
+		51 -> 42
+		50 -> 51 [label=<ast.Call object at 0x000001C548BA8580>]
+		50 -> 42 [label=<ast.UnaryOp object at 0x000001C548BAF130>]
+		47 -> 50 [label=<ast.UnaryOp object at 0x000001C548BAFE80>]
+		43 -> 47 [label=<ast.UnaryOp object at 0x000001C548BAF8B0>]
+		42 -> 43 [label=<ast.Call object at 0x000001C548BA8EB0>]
+		41 -> 42
+		39 -> 41
+		38 -> 39
+		36 -> 38
+		35 -> 36
+		33 -> 35
+		32 -> 33
+	}
+	subgraph cluster_mod_ResNet_forward {
+		label="mod.ResNet.forward"
+		55 [label="block:55@184
+x = self.conv1(x):Line 184
+x = self.batchNorm1(x):Line 185
+x = self.relu1(x):Line 186
+x = self.resLayer1(x):Line 189
+x = self.resLayer2(x):Line 190
+x = self.resLayer3(x):Line 191
+x = self.avgpool1(x):Line 194
+x = x.view(x.size(0), -1):Line 200
+x = self.full1(x):Line 202
+return x:Line 203
+"]
+	}
+}

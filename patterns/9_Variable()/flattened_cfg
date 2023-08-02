@@ -1,0 +1,101 @@
+digraph cluster_main {
+	graph [label=main]
+	subgraph cluster_mod {
+		label=mod
+		1 [label="block:1@1
+HP1 = {'TRAIN_SPLIT': 0.8, 'MINI_BATCH_SIZE': 500, 'NUM_EPOCHS': 2000,    'LEARNING_RATE': 0.05, 'LEARNING_RATE_DECAY': 500, 'WEIGHT_DECAY':     0.0005, 'NUM_MOMENTUM': 0.9, 'NUM_PATIENCE': 50, 'SEED': 2018}:Line 1
+def to_np(x)::Line 16
+def to_var(x)::Line 20
+class NetworkFCNN(nn.Module)::Line 29
+criterion1 = torch.nn.MSELoss(size_average=False):Line 62
+optimizer1 = torch.optim.Adam(model.parameters(), lr=HP1['LEARNING_RATE']):Line 63
+scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer1, lr_lambda=[    epoch_smooth_decay]):Line 68
+modelFCNN = NetworkFCNN(R_k_plus_1_train.shape[1], 1):Line 70
+glorot_weight_zero_bias(model=modelFCNN):Line 73
+train_set_ref = torch.utils.data.TensorDataset(torch.FloatTensor(R_k_train),    torch.FloatTensor(R_k_plus_1_train)):Line 75
+train_loader_ref = torch.utils.data.DataLoader(train_set_ref, batch_size=    HP1['MINI_BATCH_SIZE'], shuffle=False, pin_memory=True, num_workers=0):Line 76
+modelFCNN.train():Line 79
+model.eval():Line 80
+ref_train_losses = []:Line 82
+ref_valid_losses = []:Line 83
+ref_valid_score = []:Line 84
+ref_epochs = []:Line 85
+epoch_iter = range(1, HP1['NUM_EPOCHS'] + 1):Line 90
+"]
+		20 [label="block:20@94
+for epoch in epoch_iter::Line 94
+"]
+		21 [label="block:21@97
+ref_epochs.append(epoch):Line 97
+batch_idx, tloss_avg_ref, vloss_avg_ref = 0, 0, 0:Line 100
+"]
+		23 [label="block:23@101
+for batch_idx, (data_rk, data_rk_plus1) in enumerate(train_loader_ref)::Line 101
+"]
+		24 [label="block:24@103
+y_pred_ref = modelFCNN(to_var(data_rk_plus1)):Line 103
+sysnn_input = torch.cat((data_rk, y_pred_ref), dim=1):Line 110
+output_sys = model(to_var(sysnn_input)):Line 116
+loss_FCNN = criterion(output_sys, to_var(data_rk_plus1)):Line 125
+optimizer1.zero_grad():Line 129
+loss_FCNN.backward():Line 130
+optimizer1.step():Line 131
+tloss_avg_ref += loss_FCNN.item():Line 133
+"]
+		24 -> 23
+		23 -> 24 [label=<ast.Call object at 0x000002153D09F340>]
+		25 [label="block:25@135
+tloss_avg_ref /= batch_idx + 1:Line 135
+ref_train_losses.append(tloss_avg_ref):Line 136
+print(' Epoch : %s , Train loss: %s ' % (epoch, tloss_avg_ref)):Line 138
+"]
+		25 -> 20
+		23 -> 25
+		21 -> 23
+		20 -> 21 [label=<ast.Name object at 0x000002153D09FEB0>]
+		1 -> 20
+	}
+	subgraph cluster_mod_to_np {
+		label="mod.to_np"
+		3 [label="block:3@17
+return x.data.cpu().numpy():Line 17
+"]
+	}
+	subgraph cluster_mod_to_var {
+		label="mod.to_var"
+		7 [label="block:7@23
+return Variable(x):Line 23
+"]
+	}
+	subgraph cluster_mod_NetworkFCNN {
+		label="mod.NetworkFCNN"
+		11 [label="block:11@30
+def __init__(self, D_in, D_out)::Line 30
+def forward(self, x)::Line 43
+"]
+	}
+	subgraph cluster_mod_NetworkFCNN___init__ {
+		label="mod.NetworkFCNN.__init__"
+		13 [label="block:13@31
+super().__init__():Line 31
+self.lin1 = nn.Linear(D_in, 100):Line 34
+self.lin2 = nn.Linear(100, 100):Line 35
+self.lin3 = nn.Linear(100, 100):Line 36
+self.output = nn.Linear(100, D_out):Line 38
+"]
+	}
+	subgraph cluster_mod_NetworkFCNN_forward {
+		label="mod.NetworkFCNN.forward"
+		16 [label="block:16@47
+x = self.lin1(x):Line 47
+x = F.tanh(x):Line 48
+x = self.lin2(x):Line 50
+x = F.tanh(x):Line 51
+x = self.lin3(x):Line 53
+x = F.tanh(x):Line 54
+x = self.output(x):Line 56
+y = F.tanh(x):Line 57
+return y:Line 59
+"]
+	}
+}

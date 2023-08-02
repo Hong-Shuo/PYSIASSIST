@@ -1,0 +1,22 @@
+ {
+    "classdef_lineno_scope": {},
+    "start_sign": [],
+    "start_sign_necessary": "False",
+    "fg_type": "cfg",
+    "keyword_need_trace": [],
+    "arg_need_trace_pos": [0],
+    "end_sign_necessary": "False",
+    "end_sign": [],
+     "use_common_api_name": [0],
+    "find_sign": ["zero_grad"],
+    "find_all_or_any": "any",
+    "trace_type": "all_code",
+    "Find_the_basis_to_be_correct_or_incorrect": "True",
+
+    "MessageCode":"E9903",
+    "E9903": {
+        "Message": "Note that there is no zero_grad() in the code,\n which will lead to the mixing of the optimization parameters from the previous training with the current one (generally not recommended). \nThis could potentially cause a silent bug\n",
+        "Code": "without_zeor_grad().",
+        "Description": ""
+  }
+}

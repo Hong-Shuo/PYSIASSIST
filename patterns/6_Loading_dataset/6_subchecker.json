@@ -1,0 +1,21 @@
+ {
+    "classdef_lineno_scope": {},
+    "start_sign": ["DataLoader"],
+    "start_sign_necessary": "True",
+    "fg_type": "dfg",
+    "keyword_need_trace": ["shuffle"],
+    "arg_need_trace_pos": [],
+    "end_sign_necessary": "False",
+    "end_sign": [],
+     "use_common_api_name": [0],
+    "find_sign": ["True"],
+    "find_all_or_any": "any",
+    "trace_type": "reverse",
+    "Find_the_basis_to_be_correct_or_incorrect": "True",
+    "MessageCode":"C9901",
+    "C9901": {
+        "Message": "Shuffle was not performed when reading the data. Please confirm if your dataset has already been randomized.\n",
+        "Code": "The data was not shuffled during reading.",
+        "Description": ""
+  }
+}

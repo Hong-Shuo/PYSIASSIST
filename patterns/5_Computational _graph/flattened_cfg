@@ -1,0 +1,67 @@
+digraph cluster_main {
+	graph [label=main]
+	subgraph cluster_mod {
+		label=mod
+		1 [label="block:1@1
+class BatchNorm2d_new(nn.BatchNorm2d)::Line 1
+def _unsqueeze_(tensor)::Line 16
+def convert_bn(module)::Line 21
+model = BatchNorm2d_new():Line 43
+"]
+	}
+	subgraph cluster_mod__unsqueeze_ {
+		label="mod._unsqueeze_"
+		10 [label="block:10@17
+return tensor.unsqueeze(0).unsqueeze(-1).unsqueeze(-1):Line 17
+"]
+	}
+	subgraph cluster_mod_convert_bn {
+		label="mod.convert_bn"
+		14 [label="block:14@22
+module_output = module:Line 22
+if isinstance(module, torch.nn.modules.batchnorm._BatchNorm)::Line 23
+"]
+		15 [label="block:15@24
+module_output = BatchNorm2d_new(module.num_features, module.eps, module.    momentum, module.affine):Line 24
+module_output.weight.data = module.weight.data.clone():Line 30
+module_output.bias.data = module.bias.data.clone():Line 31
+module_output.running_mean = module.running_mean:Line 32
+module_output.running_var = module.running_var:Line 33
+"]
+		16 [label="block:16@35
+for name, child in module.named_children()::Line 35
+"]
+		17 [label="block:17@36
+module_output.add_module(name, convert_bn(child)):Line 36
+"]
+		17 -> 16
+		16 -> 17 [label=<ast.Call object at 0x000001AA93D9D120>]
+		18 [label="block:18@39
+del module:Line 39
+return module_output:Line 40
+"]
+		16 -> 18
+		15 -> 16
+		14 -> 15 [label=<ast.Call object at 0x000001AA93D9DF90>]
+		14 -> 16 [label=<ast.UnaryOp object at 0x000001AA93D9CCA0>]
+	}
+	subgraph cluster_mod_BatchNorm2d_new {
+		label="mod.BatchNorm2d_new"
+		3 [label="block:3@2
+def forward(self, input)::Line 2
+"]
+	}
+	subgraph cluster_mod_BatchNorm2d_new_forward {
+		label="mod.BatchNorm2d_new.forward"
+		5 [label="block:5@3
+self._check_input_dim(input):Line 3
+statistics_tbn = {'mean': input.mean(dim=[0, 2, 3]).detach().clone(), 'var':    input.var(dim=[0, 2, 3]).detach().clone()}:Line 5
+statistics_tbn['inv_std'] = torch.reciprocal(torch.sqrt(statistics_tbn[    'var'] + self.eps)):Line 7
+output = input - _unsqueeze_(statistics_tbn['mean']):Line 9
+output = output * _unsqueeze_(statistics_tbn['inv_std']):Line 10
+output = output * _unsqueeze_(self.weight):Line 11
+output = output + _unsqueeze_(self.bias):Line 12
+return output:Line 13
+"]
+	}
+}

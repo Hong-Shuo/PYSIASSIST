@@ -1,0 +1,13 @@
+digraph cluster_main {
+	graph [label=main]
+	subgraph cluster_mod {
+		label=mod
+		1 [label="block:1@1
+optimizer.zero_grad():Line 1
+out = model(batch_X):Line 2
+loss = loss_fn(out, batch_y):Line 3
+loss.backward():Line 4
+optimizer.step():Line 5
+"]
+	}
+}

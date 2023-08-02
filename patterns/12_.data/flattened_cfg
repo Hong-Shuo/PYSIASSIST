@@ -1,0 +1,26 @@
+digraph cluster_main {
+	graph [label=main]
+	subgraph cluster_mod {
+		label=mod
+		1 [label="block:1@2
+x = torch.hstack((input_mags, params)):Line 2
+out1 = network(x, fc_weights):Line 3
+out2 = network(out, fc_weights):Line 4
+loss_params = MyLoss(out2):Line 5
+with torch.no_grad()::Line 8
+"]
+		2 [label="block:2@9
+params2.copy_(out1):Line 9
+params3.copy_(out2):Line 10
+"]
+		3 [label="block:3@13
+out = network(params2, fc_weights):Line 13
+loss_params2 = MyLoss(out):Line 14
+loss_params3 = MyLoss(params3):Line 16
+loss = loss_params1 + loss_params2 + loss_params3:Line 20
+loss.backward():Line 21
+"]
+		2 -> 3
+		1 -> 2
+	}
+}

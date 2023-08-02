@@ -1,0 +1,65 @@
+digraph cluster_main {
+	graph [label=main]
+	subgraph cluster_mod {
+		label=mod
+		1 [label="block:1@1
+class TextClassificationRNN(nn.Module)::Line 1
+objective = nn.BCEWithLogitsLoss():Line 36
+optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9):Line 37
+model = TextClassificationRNN(128, encoder.vocab_size, 200, 256, 1, 2):Line 38
+if torch.cuda.is_available()::Line 39
+"]
+		16 [label="block:16@40
+model.cuda():Line 40
+"]
+		1 -> 16 [label=<ast.Call object at 0x000001DAA4493250>]
+	}
+	subgraph cluster_mod_TextClassificationRNN {
+		label="mod.TextClassificationRNN"
+		3 [label="block:3@2
+def __init__(self, batch, vocab_size, w2v_dim, hidden_size, num_layers,    num_classes)::Line 2
+def init_hidden(self)::Line 19
+def forward(self, x, seq_len_list)::Line 24
+"]
+	}
+	subgraph cluster_mod_TextClassificationRNN___init__ {
+		label="mod.TextClassificationRNN.__init__"
+		5 [label="block:5@3
+super(TextClassificationRNN, self).__init__():Line 3
+self.batch = batch:Line 5
+self.hidden_size = hidden_size:Line 6
+self.num_layers = num_layers:Line 7
+self.num_classes = num_classes:Line 8
+self.vocab_size = vocab_size:Line 9
+self.w2v_dim = w2v_dim:Line 10
+self.emb = nn.Embedding(self.vocab_size, self.w2v_dim):Line 12
+self.rnn = nn.LSTM(self.w2v_dim, self.hidden_size, self.num_layers):Line 13
+self.init_state = self.init_hidden():Line 14
+self.dense = nn.Linear(self.hidden_size, int(self.hidden_size / 2)):Line 15
+self.dense2class = nn.Linear(int(self.hidden_size / 2), 2):Line 16
+self.dropout = nn.Dropout(0.5):Line 17
+"]
+	}
+	subgraph cluster_mod_TextClassificationRNN_init_hidden {
+		label="mod.TextClassificationRNN.init_hidden"
+		8 [label="block:8@20
+h0 = torch.randn(self.num_layers, self.batch, self.hidden_size, device=device):Line 20
+c0 = torch.randn(self.num_layers, self.batch, self.hidden_size, device=device):Line 21
+return h0, c0:Line 22
+"]
+	}
+	subgraph cluster_mod_TextClassificationRNN_forward {
+		label="mod.TextClassificationRNN.forward"
+		12 [label="block:12@25
+x = self.emb(x):Line 25
+x = x.view(x.shape[1], x.shape[0], -1):Line 26
+packed_data = torch.nn.utils.rnn.pack_padded_sequence(x, seq_len_list,    enforce_sorted=False):Line 27
+output, hn = self.rnn(packed_data, self.init_state):Line 28
+unpacked_data, _ = torch.nn.utils.rnn.pad_packed_sequence(output):Line 29
+dense_output = self.dense(unpacked_data[-1]):Line 30
+dense_output = self.dropout(dense_output):Line 31
+dense2class = self.dense2class(dense_output):Line 32
+return dense2class:Line 33
+"]
+	}
+}

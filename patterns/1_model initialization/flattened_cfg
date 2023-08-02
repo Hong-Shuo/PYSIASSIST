@@ -1,0 +1,30 @@
+digraph cluster_main {
+	graph [label=main]
+	subgraph cluster_mod {
+		label=mod
+		1 [label="block:1@1
+beta = 0.5:Line 1
+params1 = model1.named_parameters():Line 2
+params2 = model2.named_parameters():Line 3
+dict_params2 = dict(params2):Line 5
+"]
+		2 [label="block:2@7
+for name1, param1 in params1::Line 7
+"]
+		3 [label="block:3@8
+if name1 in dict_params2::Line 8
+"]
+		5 [label="block:5@9
+dict_params2[name1].data.copy_(beta * param1.data + (1 - beta) *    dict_params2[name1].data):Line 9
+"]
+		5 -> 2
+		3 -> 5 [label=<ast.Compare object at 0x000001B6CC19D720>]
+		3 -> 2 [label=<ast.Compare object at 0x000001B6CC19C190>]
+		2 -> 3 [label=<ast.Name object at 0x000001B6CC19D780>]
+		4 [label="block:4@11
+model.load_state_dict(dict_params2):Line 11
+"]
+		2 -> 4
+		1 -> 2
+	}
+}
