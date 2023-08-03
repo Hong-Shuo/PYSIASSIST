@@ -36,5 +36,5 @@ or just use requirements.txt.
 
 Then, if users want to use the 14 patterns, they can put the code that need to be checked into the 'Code_to_be_Checked' file in the corresponding folder, and execute the checker.py file.
 
-For users who want to expand ECSP, they can refer to the checker.py and configured json files of the 14 patterns for configuration and combination of Subcheckers.In the future, we will develop scripts to help users fill in the configuration files.
+For users who want to expand ECSP, they can refer to the checker.py and configured json files of the 14 patterns for configuration and combination of Subcheckers. In the future, we will develop scripts to help users fill in the configuration files.
 
