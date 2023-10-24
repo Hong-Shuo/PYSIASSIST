@@ -14,7 +14,7 @@ From 14,523 posts in the PyTorch forum, we selected 365 silent bug posts , All 3
 <img width="692" alt="image" src="https://github.com/shuffer137/Investigating-and-Detecting-Silent-Bugs-in-PyTorch-Programs/assets/65355046/16f7f5a5-bc2c-4d50-b917-13aaedba65bc">
 
 
-## PYSIASSIST ( **Py**torch **Si**lent bug **Assisant** )
+## PYSIASSIST(**Py**torch **Si**lent bug **Assisant**)
 
 ### Introduction
 
