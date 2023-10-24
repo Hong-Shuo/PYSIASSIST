@@ -3,7 +3,6 @@
 This project is the code repository for our submission to SANER 2024.. Please feel free to contact us, if you have any questions.
 
 
-
 ## Empirical Results
 
 we conducted the first empirical study to analyze the characteristics of silent bugs in PyTorch programs.
