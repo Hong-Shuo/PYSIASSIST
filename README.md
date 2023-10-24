@@ -10,7 +10,7 @@ we conducted the first empirical study to analyze the characteristics of silent 
 
 From 14,523 posts in the PyTorch forum, we selected 365 silent bug posts , All 365 silent bug posts with labeled symptoms and root causes is available [here](https://anonymous.4open.science/r/PYSIASSIST-artifact/dataset/dataset.xlsx). In addition, we have summarized 14 patterns from these silent bug posts and have developed corresponding PYSIASSIST to apply these patterns. They are available [here](https://anonymous.4open.science/r/PYSIASSIST-artifact/patterns). 
 
-### Pattern detail
+### Patterns detail
 <img width="692" alt="image" src="https://github.com/shuffer137/Investigating-and-Detecting-Silent-Bugs-in-PyTorch-Programs/assets/65355046/16f7f5a5-bc2c-4d50-b917-13aaedba65bc">
 
 
