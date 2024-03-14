@@ -1,6 +1,6 @@
 #  PYSIASSIST-artifact
 
-This project is the code repository for our submission to SANER 2024.. Please feel free to contact us, if you have any questions.
+This project is the code repository for our submission to SANER 2024. Please feel free to contact us, if you have any questions.
 
 
 ## Empirical Results
